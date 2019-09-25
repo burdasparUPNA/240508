@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+MAXIMO_NUMERO = 100
+
 import random
 
 class Jugador:
@@ -11,14 +13,20 @@ class Jugador:
 
     def pensar(self):
         if self.tipo == "maquina":
-            self.numero_pensado = random.randint(0, 1000)
+            self.numero_pensado = random.randint(0, MAXIMO_NUMERO)
         else:
-            self.numero_pensado = int(input("{} introduce un número pensado (0 .. 1000): ".format(self.nombre)))
+            inputVariable2 = input("{} introduce un número pensado (0 .. {}): ".format(self.nombre, MAXIMO_NUMERO))
+            while not(self.validarNumero(inputVariable2)):
+                inputVariable2 = input("{} introduce un número pensado (0 .. {}): ".format(self.nombre, MAXIMO_NUMERO))
+            self.numero_pensado = int(inputVariable2)
         return self.numero_pensado
 
     def proponer(self):
         self.numeros_propuestos = self.numeros_propuestos + 1
-        return int(input("{} introduce un número a ver si lo adivinas: ".format(self.nombre)))
+        inputVariable3 = input("{} introduce un número a ver si lo adivinas (0..{}): ".format(self.nombre, MAXIMO_NUMERO))
+        while not(self.validarNumero(inputVariable3)):
+            inputVariable3 = input("{} introduce un número a ver si lo adivinas (0..{}): ".format(self.nombre, MAXIMO_NUMERO))
+        return int(inputVariable3)
 
     def comprobar(self, numero_a_comprobar):
         if  numero_a_comprobar == self.numero_pensado:
@@ -30,6 +38,17 @@ class Jugador:
             else:
                 print("{} dice: el número pensado es mayor que el propuesto".format(self.nombre))
             return 0
+
+    def validarNumero(self, numero):
+        try:
+            if int(numero) < 0 or int(numero) > MAXIMO_NUMERO:
+                print("Valor fuera del rango. Introduce un entero comprendido entre 0 .. {}".format(MAXIMO_NUMERO))
+                return False
+            else:
+                return True
+        except ValueError:
+            print("No valen valores distintos de un entero. Introduce un entero comprendido entre 0 .. {}".format(MAXIMO_NUMERO))
+            return False
 
 class Partida:
     def __init__(self, nombre_j1, nombre_j2, tipo_j2):
@@ -44,5 +63,9 @@ class Partida:
         print("Partida terminada. Número de intentos: {}".format(self.numero_intentos))
 
 
-while raw_input("¿Quieres jugar una partida (s/n)? ") == "s":
-    partida = Partida(raw_input("Nombre del jugador 1: "), raw_input("Nombre del jugador 2: "), raw_input("¿Jugador 2 es una persona o una maquina?(persona/maquina): "))
+while input("¿Quieres jugar una partida (s/n)? ") == "s":
+    inputVariable = input("¿Jugador 2 es una persona o una maquina?(persona/maquina): ")
+    while inputVariable != "persona" and inputVariable != "maquina":
+        print("Valor no válido")
+        inputVariable = input("¿Jugador 2 es una persona o una maquina?(persona/maquina): ")
+    partida = Partida(input("Nombre del jugador 1: "), input("Nombre del jugador 2: "), inputVariable)
