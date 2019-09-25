@@ -26,13 +26,14 @@ class ExchangeClient:
     def convertDate(self):
         return self.date
 
-ficheroEntrada = open('./ficheroEntrada.txt', 'r')
-ficheroSalida = open('./ficheroSalida.txt', 'w')
-ficheroSalida.write('Fecha\t\t | Total\n')
+ficheroEntrada = open('./divisas.txt', 'r')
+ficheroSalida = open('./ahorros.txt', 'a')
 conversor = ExchangeClient('EUR')
+suma = 0
 for linea in ficheroEntrada:
     datos = linea.split(', ')
-    ficheroSalida.write('{}\t | {}\n'.format(conversor.convertDate(), conversor.convert(int(datos[1]), datos[0])))
+    suma += conversor.convert(int(datos[1]), datos[0])
+ficheroSalida.write('{}\t | {}\n'.format(conversor.convertDate(), suma))
 
 ficheroEntrada.close()
 ficheroSalida.close()
