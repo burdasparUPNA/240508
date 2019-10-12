@@ -4,14 +4,15 @@
 Primero antes de comentar nada, decir que al empezar a realizar
 la práctica comenzé creando el proyecto en PyCharm dentro del
 repositorio Git junto a los otros proyectos y en ese momentento
-no me dejo instalar Flask en el proyecto. Espero que cuando lo
-suba al repositorio no haya ningún problema.
+no me dejo instalar Flask en el proyecto. Así que lo creé en otro
+directorio y luego lo añadi al repositorio. Espero que no haya
+ningún problema.
 
 Ahora comentare el proyecto.
 
 Para poder gestionar todo lo relacionado con la base de datos
-he creado Database.py que recibe la base como parámetro y
-desde aquí se puede ejecutar las consultas y demás.
+he creado la calse Database.py que recibe el nombre de la base
+como parámetro y desde aquí se puede ejecutar las consultas y demás.
 
 En la parte que devuelve JSON, he usado Jsonify, viene en la
 librería de Flask. He decidido usar Jsonify en vez de
